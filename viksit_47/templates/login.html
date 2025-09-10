@@ -1,0 +1,53 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center py-5" style="min-height: 80vh;">
+    <div class="card p-4" style="width: 100%; max-width: 400px;">
+        <h3 class="text-center mb-3">Login</h3>
+
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% if messages %}
+        <div>
+            {% for message in messages %}
+             <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label>Username:</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+
+            <div class="mb-3 position-relative">
+                <label>Password:</label>
+                <div class="input-group">
+                    <input type="password" name="password" id="password" class="form-control" required>
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">👁️</button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+
+        <p class="text-center mt-3">
+            Not registered? <a href="{% url 'register' %}">Register here</a>
+        </p>
+    </div>
+</div>
+
+<script>
+function togglePassword() {
+    const passwordInput = document.getElementById("password");
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+</script>
+
+{% endblock %}

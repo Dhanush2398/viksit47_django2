@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.payment-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px 30px;
+    background: #002147;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(163, 157, 157, 0.1);
+    text-align: center;
+    color: #fff;
+}
+.payment-container h2 {
+    color: #FFB606;
+    margin-bottom: 20px;
+}
+.payment-container p {
+    margin-bottom: 30px;
+}
+</style>
+
+<div class="payment-container">
+    <h2>Redirecting to Payment...</h2>
+    <p>Please wait while we redirect you to the payment gateway.</p>
+    <p>Amount: ₹{{ amount }}</p>
+</div>
+
+<script>
+   
+    const payUrl = "{{ outputurl }}";
+    if (payUrl) {
+        window.location.href = payUrl;
+    }
+</script>
+{% endblock %}
+

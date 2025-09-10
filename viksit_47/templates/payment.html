@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.payment-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px 30px;
+    background: #002147;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(163, 157, 157, 0.1);
+}
+
+.payment-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: #FD120A;
+}
+
+.payment-container p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.payment-container select,
+.payment-container input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.payment-container button {
+    width: 100%;
+    background: #FFB606;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.payment-container button:hover {
+    background: #FFB606;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 30px 20px;
+        margin: 30px 15px;
+    }
+    .payment-container h2 {
+        font-size: 24px;
+    }
+    .payment-container button {
+        font-size: 16px;
+    }
+}
+</style>
+
+<div class="payment-container">
+    <h2>Complete Payment</h2>
+
+    <p><strong>Course:</strong> {{ course.title }}</p>
+
+    <form method="post" action="{% url 'subscribe_1year' course.id %}">
+        {% csrf_token %}
+
+        {% if course.mode == 'both' %}
+            <label for="mode">Select Mode:</label>
+            <select id="mode" name="mode" required>
+                {% if course.price_online %}
+                    <option value="online">Online - ₹{{ course.price_online }}</option>
+                {% endif %}
+                {% if course.price_offline %}
+                    <option value="offline">Offline - ₹{{ course.price_offline }}</option>
+                {% endif %}
+            </select>
+        {% elif course.mode == 'online' %}
+            <input type="hidden" name="mode" value="online">
+            <p>Price: ₹{{ course.price_online }} (Online only)</p>
+        {% elif course.mode == 'offline' %}
+            <input type="hidden" name="mode" value="offline">
+            <p>Price: ₹{{ course.price_offline }} (Offline only)</p>
+        {% endif %}
+
+        <button type="submit">Proceed to Payment</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% block title %}Mock Tests{% endblock %}
+
+{% block content %}
+<style>
+body {
+  background: #f4f6fa;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #1a1a1a;
+}
+
+.exam-details {
+  width: min(900px, 95%);
+  margin: 20px auto;
+  padding: 20px 25px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+.exam-details h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #0f172a;
+}
+
+.exam-details p {
+  display: inline-block;
+  margin: 6px 10px 0 0;
+  padding: 8px 14px;
+  font-size: 14px;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+}
+
+
+#countdown {
+  display: inline-block;
+  padding: 8px 14px;
+  min-width: 90px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+  background: #2563eb; /* blue */
+  border-radius: 10px;
+  border: 1px solid #1d4ed8;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
+  70%  { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+@media (max-width: 500px) {
+  .exam-details {
+    padding: 15px 18px;
+  }
+  .exam-details h3 {
+    font-size: 20px;
+  }
+  .exam-details p {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+  #countdown {
+    font-size: 14px;
+    min-width: 80px;
+    padding: 6px 10px;
+  }
+}
+</style>
+
+<!-- Exam Details -->
+<div class="exam-details">
+    <h3>{{ exam.title }}</h3>
+    <p>Difficulty: {{ exam.get_difficulty_display }}</p>
+    <p>Time Limit: {{ exam.time_limit }} minutes</p>
+    <p>Time Left: <span id="countdown">--:--</span></p>
+</div>
+
+<div class="test-container">
+    <div class="status">
+        Total: <span id="totalQ">{{ questions.count }}</span> |
+        Attempted: <span id="attemptedQ">0</span>
+    </div>
+
+<form id="quizForm" method="POST" action="{% url 'submit_mock' exam.id %}">
+    {% csrf_token %}
+    <div id="quiz-box">
+        {% for q in questions %}
+        <div class="question" style="display: {% if forloop.first %}block{% else %}none{% endif %};">
+            <div class="question-header">{{ forloop.counter }}. {{ q.text }}</div>
+            {% if q.image %}
+            <img src="{{ q.image.url }}" class="question-img">
+            {% endif %}
+            <ul class="options">
+                {% for option in q.options.all %}
+                <li>
+                    <input type="radio" name="q{{ q.id }}" value="{{ option.id }}" id="q{{ q.id }}_{{ forloop.counter0 }}">
+                    <label for="q{{ q.id }}_{{ forloop.counter0 }}">{{ option.text }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="navigation">
+        <button type="submit">Submit</button>
+    </div>
+</form>
+
+<div id="result" class="result"></div>
+</div>
+
+<script>
+const totalTime = {{ exam.time_limit }} * 60; 
+const countdownEl = document.getElementById('countdown');
+const quizForm = document.getElementById('quizForm');
+let examTime = totalTime;
+
+
+if (!sessionStorage.getItem('quizStarted')) {
+    localStorage.removeItem('quizTimeLeft');
+    sessionStorage.setItem('quizStarted', 'true');
+}
+
+
+if (localStorage.getItem('quizTimeLeft')) {
+    const savedTime = parseInt(localStorage.getItem('quizTimeLeft'));
+    if (!isNaN(savedTime) && savedTime > 0) {
+        examTime = savedTime;
+    }
+}
+
+
+const questionsEl = document.querySelectorAll('.question');
+let currentIndex = 0;
+
+function showQuestion(index) {
+    questionsEl.forEach((q, i) => {
+        q.style.display = i === index ? 'block' : 'none';
+    });
+
+    let attempted = document.querySelectorAll('input[type="radio"]:checked').length;
+    document.getElementById('attemptedQ').textContent = attempted;
+}
+showQuestion(currentIndex);
+
+
+function updateTimer() {
+    let minutes = Math.floor(examTime / 60);
+    let seconds = examTime % 60;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    countdownEl.textContent = `${minutes}:${seconds}`;
+
+    if (examTime <= 0) {
+        clearInterval(timerInterval);
+        localStorage.removeItem('quizTimeLeft');
+        sessionStorage.removeItem('quizStarted');
+        alert("Time's up! Submitting the quiz...");
+        quizForm.submit();
+        return;
+    }
+
+    examTime--;
+    localStorage.setItem('quizTimeLeft', examTime);
+}
+
+const timerInterval = setInterval(updateTimer, 1000);
+updateTimer();
+
+
+history.pushState({ page: "quiz" }, "", location.href);
+
+window.addEventListener("popstate", function () {
+    localStorage.removeItem('quizTimeLeft');
+    sessionStorage.removeItem('quizStarted');
+    alert("You navigated back! The test will now end.");
+    if (quizForm) quizForm.submit();
+    history.pushState({ page: "quiz" }, "", location.href); 
+});
+
+
+window.addEventListener("beforeunload", function (e) {
+    localStorage.removeItem('quizTimeLeft');
+    sessionStorage.removeItem('quizStarted');
+    if (quizForm) quizForm.submit();
+});
+
+
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "F5" || (e.ctrlKey && e.key.toLowerCase() === "r")) {
+        e.preventDefault();
+        alert("You cannot refresh during the quiz!");
+    }
+
+    if (e.altKey && (e.key === "ArrowLeft" || e.key === "ArrowRight")) {
+        e.preventDefault();
+        alert("You cannot navigate back/forward during the quiz!");
+    }
+});
+
+quizForm.addEventListener('submit', function(e) {
+
+    if (examTime > 0) {
+        e.preventDefault();
+        let confirmSubmit = confirm("Are you sure you want to submit? You won't be able to change answers after submitting.");
+        if (confirmSubmit) {
+            localStorage.removeItem('quizTimeLeft');
+            sessionStorage.removeItem('quizStarted');
+            this.querySelector('button[type="submit"]').disabled = true;
+            this.submit();
+        }
+    }
+});
+</script>
+
+{% endblock %}

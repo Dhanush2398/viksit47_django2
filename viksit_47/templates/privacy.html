@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Privacy Policy - Viksit47{% endblock %}
+
+{% block content %}
+<style>
+.policy-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 50px 40px;
+    background: linear-gradient(180deg, #f9f9f9 0%, #ffffff 100%);
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0, 33, 71, 0.15);
+    font-family: 'Segoe UI', sans-serif;
+    color: #002147;
+    transition: transform 0.3s;
+}
+
+.policy-container:hover {
+    transform: translateY(-5px);
+}
+
+.policy-container h1 {
+    font-size: 3rem;
+    text-align: center;
+    color: #FFB606;
+    margin-bottom: 30px;
+    background: linear-gradient(to right, #FFB606, #002147);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.policy-container h1::after {
+    content: "";
+    width: 100px;
+    height: 5px;
+    background: #FFB606;
+    display: block;
+    margin: 15px auto 0;
+    border-radius: 3px;
+}
+
+.policy-container h2 {
+    font-size: 1.8rem;
+    color: #002147;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-left: 6px solid #FFB606;
+    padding-left: 12px;
+    background-color: #fff7d1;
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+.policy-container p, .policy-container li {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 14px;
+}
+
+.policy-container ul {
+    list-style-type: disc;
+    margin-left: 35px;
+}
+
+.policy-container a {
+    color: #FFB606;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.policy-container a:hover {
+    color: #002147;
+}
+
+.policy-container li {
+    margin-bottom: 12px;
+}
+
+.policy-container .contact-info {
+    margin-top: 30px;
+    padding: 15px;
+    background: #002147;
+    color: #fff;
+    border-radius: 15px;
+}
+
+.policy-container .contact-info a {
+    color: #FFB606;
+}
+
+.policy-container .contact-info p {
+    color: #fff;
+}
+
+.policy-container .contact-info a:hover {
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .policy-container {
+        padding: 35px 25px;
+        margin: 40px 15px;
+    }
+    .policy-container h1 {
+        font-size: 2.4rem;
+    }
+    .policy-container h2 {
+        font-size: 1.5rem;
+    }
+    .policy-container p, .policy-container li {
+        font-size: 1rem;
+    }
+}
+</style>
+
+<div class="policy-container">
+    <h1>Privacy Policy</h1>
+
+    <p>Your privacy is important to us at <strong>Viksit47</strong>. This Privacy Policy explains how we collect, use, and protect your information.</p>
+
+    <h2>1. Information We Collect</h2>
+    <ul>
+        <li>Personal information like your name, email, and phone number when you register or contact us.</li>
+        <li>Payment information for course purchases, which is securely processed.</li>
+    </ul>
+
+    <h2>2. How We Use Your Information</h2>
+    <ul>
+        <li>To provide and improve our courses and services.</li>
+        <li>To process payments and send purchase confirmations.</li>
+        <li>To send updates, newsletters, or important announcements (you can opt out anytime).</li>
+    </ul>
+
+    <h2>3. Sharing of Information</h2>
+    <p>We do not sell, trade, or rent your personal information to others. We may share information with trusted partners who assist us in operating our website or delivering services.</p>
+
+    <h2>4. Security</h2>
+    <p>We implement industry-standard measures to protect your data from unauthorized access, disclosure, or misuse.</p>
+
+    <h2>5. Cookies</h2>
+    <p>Our website uses cookies to improve user experience. You can manage cookies via your browser settings.</p>
+
+    <h2>6. Contact Us</h2>
+    <div class="contact-info">
+        <p>Email: <a href="mailto:viksit47academy@gmail.com">viksit47academy@gmail.com</a></p>
+        <p>Phone: <a href="tel:+918217413646">+91 82174 13646</a></p>
+    </div>
+</div>
+{% endblock %}

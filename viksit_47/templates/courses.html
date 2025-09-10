@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Courses - Viksit47{% endblock %}
+
+{% block content %}
+
+<!-- Start Breadcrumb -->
+<div class="breadcrumb-area shadow dark text-center bg-fixed text-light" 
+     style="background-image: url('{% static "img/1.jpg" %}');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Courses</h1>
+                <ul class="breadcrumb">
+                    <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="active">Courses</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumb -->
+
+<!-- Start Event / Courses Section -->
+<section id="event" class="event-area default-padding">
+    <div class="container">
+        <div class="row">
+            <div class="site-heading text-center">
+                <div class="col-lg-8 offset-lg-2">
+                    <h2>Courses</h2>
+                    <p>
+                        Stay ahead with our upcoming courses designed to enhance your skills and knowledge. 
+                        From agriculture basics to advanced farming techniques, explore programs that prepare you for real-world success. 
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-items">
+            <div class="row">
+
+                <!-- Single Item Template -->
+                <div class="col-lg-6">
+                    <div class="item vertical">
+                        <div class="thumb">
+                            <img src="{% static 'img/test/9.jpg' %}" alt="Thumb">
+                        </div>
+                        <div class="info">
+                            <h4><a href="#">Agronomy</a></h4>
+                            <p>1 course(s)</p>
+                            <a href="{% url 'contact' %}" class="btn btn-dark effect btn-sm">
+                                <i class="fas fa-chart-bar"></i> Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat for other courses -->
+                
+                <div class="col-lg-6">
+                    <div class="item vertical">
+                        <div class="thumb">
+                            <img src="{% static 'img/test/10.jpg' %}" alt="Thumb">
+                        </div>
+                        <div class="info">
+                            <h4><a href="#">Plant Science</a></h4>
+                            <p>4 course(s)</p>
+                            <a href="{% url 'contact' %}" class="btn btn-dark effect btn-sm">
+                                <i class="fas fa-chart-bar"></i> Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Continue for all other course items -->
+                <div class="col-lg-6">
+                    <div class="item vertical">
+                        <div class="thumb">
+                            <img src="{% static 'img/test/11.webp' %}" alt="Thumb">
+                        </div>
+                        <div class="info">
+                            <h4><a href="#">Plant Pathology</a></h4>
+                            <p>3 course(s)</p>
+                            <a href="{% url 'contact' %}" class="btn btn-dark effect btn-sm">
+                                <i class="fas fa-chart-bar"></i> Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="item vertical">
+                        <div class="thumb">
+                            <img src="{% static 'img/test/12.jpg' %}" alt="Thumb">
+                        </div>
+                        <div class="info">
+                            <h4><a href="#">Genetic Breeding</a></h4>
+                            <p>2 course(s)</p>
+                            <a href="{% url 'contact' %}" class="btn btn-dark effect btn-sm">
+                                <i class="fas fa-chart-bar"></i> Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add the remaining courses similarly -->
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Event / Courses Section -->
+
+{% endblock content %}

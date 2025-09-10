@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profile - Viksit47{% endblock %}
+
+{% block content %}
+
+<style>
+
+.result-history {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    background: #fff;
+}
+
+
+.result-history table.table thead {
+    background: linear-gradient(135deg, #002147, #00162d) !important;
+    color: #FFD133 !important;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.result-history table.table thead th {
+    border: 1px solid #FFD133 !important;
+    padding: 12px !important;
+}
+
+
+.result-history table.table tbody td {
+    border: 1px solid #ddd !important;
+    padding: 12px !important;
+    text-align: center;
+    vertical-align: middle;
+    color: #002147;
+}
+
+
+.result-history table.table tr.score-high td {
+    background-color: #28a745 !important; 
+    color: white !important;
+}
+
+.result-history table.table tr.score-medium td {
+    background-color: #ffc107 !important; 
+    color: black !important;
+}
+
+.result-history table.table tr.score-low td {
+    background-color: #dc3545 !important; 
+    color: white !important;
+}
+
+
+.result-history table.table tbody tr:not(.score-high):not(.score-medium):not(.score-low):nth-child(odd) td {
+    background-color: #fef6e0 !important; 
+    color: #002147 !important;
+}
+
+.result-history table.table tbody tr:not(.score-high):not(.score-medium):not(.score-low):nth-child(even) td {
+    background-color: #ffffff !important; 
+    color: #002147 !important;
+}
+
+
+.result-history table.table tbody tr:hover td {
+    background-color: rgba(255, 193, 7, 0.2) !important; /* light amber hover */
+    color: #002147 !important;
+}
+
+.score-bar {
+    height: 12px;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.score-fill {
+    height: 100%;
+    border-radius: 6px;
+    text-align: right;
+    padding-right: 4px;
+    font-size: 10px;
+    line-height: 12px;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .result-history table.table {
+        font-size: 13px !important;
+    }
+    .result-history table.table thead th {
+        font-size: 12px !important;
+    }
+}
+</style>
+
+<!-- Start Breadcrumb -->
+<div class="breadcrumb-area shadow dark text-center bg-fixed text-light" 
+     style="background-image: url('{% static "img/1.jpg" %}');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Profile</h1>
+                <ul class="breadcrumb">
+                    <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="active">Profile</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumb -->
+
+<!-- Start Students Profile -->
+<div class="students-profiel adviros-details-area default-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 info main-content">
+                <!-- Start Tab Info -->
+                <div class="tab-info">
+                    <!-- Tab Nav -->
+                    <ul class="nav nav-tabs nav-pills" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="tab_1" data-bs-toggle="tab" data-bs-target="#tabs_1" type="button" role="tab" aria-controls="tabs_1" aria-selected="true">Dashboard</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+
+
+                          <button class="nav-link" id="tab_3" data-bs-toggle="tab" data-bs-target="#tabs_3" type="button" role="tab" aria-controls="tabs_3" aria-selected="false">Profile</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="tab_results" data-bs-toggle="tab" data-bs-target="#tabs_results" type="button" role="tab" aria-controls="tabs_results" aria-selected="false">Results</button>
+                        </li>
+                        <!-- Purchased Courses Tab -->
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="tab_courses" data-bs-toggle="tab" data-bs-target="#tabs_courses" type="button" role="tab" aria-controls="tabs_courses" aria-selected="false">Purchased Courses</button>
+</li>
+
+                    </ul>
+                    <!-- End Tab Nav -->
+
+                    <!-- Start Tab Content -->
+                    <div class="tab-content tab-content-info" id="myTabContent">
+                        <!-- Dashboard Tab -->
+                        <div class="tab-pane fade show active" id="tabs_1" role="tabpanel" aria-labelledby="tab_1">
+                            <div class="info title">
+                                <p>
+                                    <strong>Viksit47</strong> is your trusted online platform for competitive exam preparation, dedicated to helping rural students and professionals achieve their career goals. We provide expert-curated mock tests, real-time performance analysis, and a wide range of study resources for banking, SSC, and other competitive exams.
+                                </p>
+                                <p>
+                                    Our mission is simple – to make high-quality education accessible to everyone, no matter where they live. With Viksit47, you can practice anytime, track your progress, and gain the confidence you need to succeed. We believe that education is the most powerful tool to unlock opportunities and transform lives.
+                                </p>
+                                <ul>
+                                    <li>Contact <span>+91 82174 13646</span></li>
+                                    <li>Email <span>viksit47academy@gmail.com</span></li>
+                                    <li>Address <span>Bengaluru</span></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                      <div class="tab-pane fade" id="tabs_3" role="tabpanel" aria-labelledby="tab_3">
+    <div class="info title">
+        <h4>Student Profile</h4>
+        <ul>
+            <li>Name : {{ user.profile.full_name }}</li>
+            <li>Email : {{ user.profile.gmail }}</li>
+            <li>WhatsApp : {{ user.profile.whatsapp_number }}</li>
+            <li>District : {{ user.profile.district_name }}</li>
+            <li>Taluk : {{ user.profile.taluk_name }}</li>
+            <li>College : {{ user.profile.college_name }}</li>
+        </ul>
+    </div>
+</div>
+<!-- Purchased Courses Tab -->
+<div class="tab-pane fade" id="tabs_courses" role="tabpanel" aria-labelledby="tab_courses">
+    <div class="info title">
+        <h4 class="mb-3">🎓 Purchased Courses</h4>
+        {% if purchased_courses %}
+        <div class="result-history">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Course</th>
+                        <th>Mode</th>
+                        <th>Amount Paid (₹)</th>
+                        <th>Transaction ID</th>
+                        <th>Valid Until</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for sub in purchased_courses %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ sub.course.title }}</td>
+                        <td>{{ sub.course.get_mode_display }}</td> 
+                        <td>{{ sub.amount }}</td>
+                        <td>{{ sub.transaction_id|default:"DUMMY" }}</td>
+                        <td>{{ sub.end_date|date:"d M Y" }}</td>
+                        <td>
+                            {% if sub.end_date >= today %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger">Expired</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>No courses purchased yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+<!-- Results Tab -->
+<div class="tab-pane fade" id="tabs_results" role="tabpanel" aria-labelledby="tab_results">
+    <div class="info title">
+        <h4 class="mb-3">📊 Test Results</h4>
+        <div class="result-history">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Test Name</th>
+                        <th>Total Qs</th>
+                        <th>Attempted</th>
+                        <th>Correct</th>
+                        <th>Score (%)</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+    <tbody class="text-center">
+{% for res in request.user.mockresult_set.all %}
+<tr 
+    {% if res.score >= 80 %}
+        class="score-high"
+    {% elif res.score >= 50 %}
+        class="score-medium"
+    {% else %}
+        class="score-low"
+    {% endif %}
+>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ res.mock.title }}</td>
+    <td>{{ res.total }}</td>
+    <td>{{ res.attempted }}</td>
+    <td>{{ res.correct }}</td>
+    <td>{{ res.correct }}/{{ res.total }} ({{ res.score|floatformat:2 }}%)</td>
+    <td>{{ res.created_at|date:"d M Y H:i" }}</td>
+</tr>
+
+{% empty %}
+<tr>
+    <td colspan="7">No past results yet.</td>
+</tr>
+{% endfor %}
+</tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+                    </div>
+                    <!-- End Tab Content -->
+                </div>
+                <!-- End Tab Info -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Students Profile -->
+
+{% endblock %}
