@@ -6,7 +6,9 @@ from datetime import date, timedelta
 import requests, shortuuid
 from .models import  Mock, Question, Option, MockResult,StudyMaterial, Author, StudyMaterialItem,Course,CourseSubscription
 from .forms import RegisterForm
-
+from .forms import ContactForm
+from django.core.mail import send_mail
+from django.conf import settings
 
 auth_api = 'https://api-preprod.phonepe.com/apis/pg-sandbox'
 pg_api = 'https://api-preprod.phonepe.com/apis/pg-sandbox'
@@ -280,3 +282,39 @@ def course_detail(request, course_id):
         "authors": authors,
     })
 
+
+def contact_view(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            email = form.cleaned_data["email"]
+            phone = form.cleaned_data["phone"]
+            comments = form.cleaned_data["comments"]
+
+            subject = f"New Contact Message from {name}"
+            message = f"""
+            Name: {name}
+            Email: {email}
+            Phone: {phone}
+            
+            Message:
+            {comments}
+            """
+
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [settings.EMAIL_HOST_USER], 
+                    fail_silently=False,
+                )
+                messages.success(request, "✅ Your message has been sent successfully!")
+                return redirect("contact")
+            except Exception as e:
+                messages.error(request, f"❌ Email failed: {e}")
+    else:
+        form = ContactForm()
+
+    return render(request, "contact.html", {"form": form})

@@ -80,7 +80,7 @@
                     <option value="online">Online - ₹{{ course.price_online }}</option>
                 {% endif %}
                 {% if course.price_offline %}
-                    <option value="offline">Offline - ₹{{ course.price_offline }}</option>
+                    <option value="offline">Offline + Website Access - ₹{{ course.price_offline }}</option>
                 {% endif %}
             </select>
         {% elif course.mode == 'online' %}
@@ -88,7 +88,7 @@
             <p>Price: ₹{{ course.price_online }} (Online only)</p>
         {% elif course.mode == 'offline' %}
             <input type="hidden" name="mode" value="offline">
-            <p>Price: ₹{{ course.price_offline }} (Offline only)</p>
+            <p>Price: ₹{{ course.price_offline }} (Offline + Website Access)</p>
         {% endif %}
 
         <button type="submit">Proceed to Payment</button>

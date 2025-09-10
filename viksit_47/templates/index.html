@@ -70,6 +70,7 @@
 </button>
   </div>
     </div>
+
 <!-- Start Courses -->
 <section id="event" class="event-area default-padding">
     <div class="container">
@@ -103,13 +104,16 @@
                                 <a href="{% url 'course_detail' course.id %}">{{ course.title }}</a>
                             </h4>
 
-                            {# Show Mode + Price only if not purchased #}
                             {% if not user.is_authenticated or course.id not in purchased_courses %}
                                 <p>
                                     <strong>Mode :</strong>
                                     {% if course.mode == 'online' %} Online
                                     {% elif course.mode == 'offline' %} Offline + Website Access
-                                    {% else %} Online & Offline + Website Access
+                                    {% else %} 
+                                     <span class="course-mode"> 
+                                          1) Online <br>
+                                          2) Offline + Website Access
+                                     </span>
                                     {% endif %}
                                 </p>
 
@@ -461,18 +465,64 @@
 
 <section class="previous-result py-5">
     <div class="container text-center">
-          <div class="site-heading text-center">
-                <div class="col-lg-8 offset-lg-2">
-                    <h2>Previous Results</h2>
-                </div>
+        <div class="site-heading text-center">
+            <div class="col-lg-8 offset-lg-2">
+                <h2>Previous Results</h2>
             </div>
+        </div>
         <p class="mb-4">
             Here are some of the proud achievements of our students.
         </p>
-        <div class="result-image">
+        <div class="result-image mb-5">
             <img src="{% static 'img/result.jpeg' %}" alt="Previous Result" class="img-fluid rounded shadow">
+        </div>
+
+        <!-- Student Profiles Section -->
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="student-card text-center">
+                    <img src="{% static 'img/students/1.jpeg' %}" alt="Student 1" class="img-fluid rounded shadow mb-3">
+                    <h5 class="mb-1">Chandana H</h5>
+                    <p class="mb-1">Bsc(Hons) agriculture </p>
+                    <p class="text-muted">Got government seat in Hassan Agriculture College</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="student-card text-center">
+                    <img src="{% static 'img/students/2.jpeg' %}" alt="Student 2" class="img-fluid rounded shadow mb-3">
+                    <h5 class="mb-1">Divija </h5>
+                    <p class="mb-1">Bsc(Hons) Agriculture</p>
+                    <p class="text-muted">Got government seat in GKVK Bangalore</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="student-card text-center">
+                    <img src="{% static 'img/students/3.jpeg' %}" alt="Student 3" class="img-fluid rounded shadow mb-3">
+                    <h5 class="mb-1">Moulya C</h5>
+                    <p class="mb-1">Bsc(Hons) agriculture </p>
+                    <p class="text-muted">Got government seat in Mandya VC Farm</p>
+                </div>
+            </div>
+             <div class="col-md-4 mb-4">
+                <div class="student-card text-center">
+                    <img src="{% static 'img/students/4.jpeg' %}" alt="Student 2" class="img-fluid rounded shadow mb-3">
+                    <h5 class="mb-1">Manasi S</h5>
+                    <p class="mb-1">Bsc(Hons) Agriculture </p>
+                    <p class="text-muted">Got seat In GKVK Bangalore</p>
+                </div>
+            </div>
+
+             <div class="col-md-4 mb-4">
+                <div class="student-card text-center">
+                    <img src="{% static 'img/students/5.jpeg' %}" alt="Student 2" class="img-fluid rounded shadow mb-3">
+                    <h5 class="mb-1">Yashu B C</h5>
+                    <p class="mb-1">Bsc(Hons) Horticulture </p>
+                    <p class="text-muted">Got seat In College of Horticulture Hiriyur</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
 
  {% endblock content %}
