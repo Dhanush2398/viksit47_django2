@@ -197,7 +197,7 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ sub.course.title }}</td>
-                        <td>{{ sub.course.get_mode_display }}</td> 
+                        <td>{{ sub.get_mode_display }}</td>
                         <td>{{ sub.amount }}</td>
                         <td>{{ sub.transaction_id|default:"DUMMY" }}</td>
                         <td>{{ sub.end_date|date:"d M Y" }}</td>

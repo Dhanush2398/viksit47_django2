@@ -190,6 +190,7 @@ def subscribe_1year(request, course_id):
         subscription = CourseSubscription.objects.create(
             user=request.user,
             course=course,
+             mode=mode,
             end_date=date.today() + timedelta(days=365),
             uu_id=uid,
             amount=amount,

@@ -115,11 +115,15 @@ class Author(models.Model):
     def __str__(self):
         return f"{self.name} ({self.course.title})"
 
-
-
 class CourseSubscription(models.Model):
+    MODE_CHOICES = [
+        ('online', 'Online'),
+        ('offline', 'Offline + Website Access'),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    mode = models.CharField(max_length=10, choices=MODE_CHOICES, default='online')  
     end_date = models.DateField()
     uu_id = models.CharField(max_length=100, unique=True)
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
@@ -127,5 +131,4 @@ class CourseSubscription(models.Model):
     is_paid = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.user.username} - {self.course.title}"
-
+        return f"{self.user.username} - {self.course.title} ({self.get_mode_display()})"
