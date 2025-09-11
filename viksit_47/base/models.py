@@ -113,7 +113,7 @@ class Author(models.Model):
     image = models.ImageField(upload_to='authors/')
 
     def __str__(self):
-        return f"{self.name} ({self.course.title})"
+        return f"{self.name} ({self.course.title})" if self.course else self.name
 
 class CourseSubscription(models.Model):
     MODE_CHOICES = [
@@ -129,6 +129,7 @@ class CourseSubscription(models.Model):
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
     amount = models.PositiveIntegerField()
     is_paid = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.user.username} - {self.course.title} ({self.get_mode_display()})"
+    
+def __str__(self):
+    course_title = self.course.title if self.course else "No Course"
+    return f"{self.user.username} - {course_title} ({self.get_mode_display()})"
