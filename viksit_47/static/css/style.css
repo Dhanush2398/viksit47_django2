@@ -9314,3 +9314,46 @@ nav.navbar.validnavs .navbar-brand > img {
         height: 280px;
     }
 }
+.capitalize-text {
+    text-transform: capitalize !important;
+}
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999999;
+}
+
+
+.whatsapp-float img {
+    height: 70px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+
+.whatsapp-float img:hover {
+    transform: scale(1.1);
+}
+
+
+@media (max-width: 1024px) {
+    .whatsapp-float img {
+        height: 60px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .whatsapp-float img {
+        height: 50px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .whatsapp-float img {
+        height: 45px;
+    }
+}

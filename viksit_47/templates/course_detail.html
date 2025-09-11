@@ -226,14 +226,6 @@
                 {% endif %}
                 <h3>{{ author.name }}</h3>
                 <p>{{ author.education }}</p>
-                <small>
-                    Courses:
-                    {% for course in author.courses.all %}
-                        {{ course.title }}{% if not forloop.last %}, {% endif %}
-                    {% empty %}
-                        No courses
-                    {% endfor %}
-                </small>
             </div>
         </div>
         {% empty %}
@@ -241,5 +233,7 @@
         {% endfor %}
     </div>
 </div>
-
+<a href="https://wa.me/918217413646" target="_blank" class="whatsapp-float">
+    <img src="{% static 'img/whatsapp.png' %}" alt="WhatsApp" />
+</a>
 {% endblock content %}
