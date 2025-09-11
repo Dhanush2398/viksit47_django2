@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Refund Policy - Viksit47{% endblock %}
 
 {% block content %}
@@ -174,5 +175,7 @@
         <p>Phone: <a href="tel:+918217413646">+91 82174 13646</a></p>
     </div>
 </div>
-
-{% endblock %}
+<a href="https://wa.me/918217413646" target="_blank" class="whatsapp-float">
+    <img src="{% static 'img/whatsapp.png' %}" alt="WhatsApp" />
+</a>
+{% endblock content%}
