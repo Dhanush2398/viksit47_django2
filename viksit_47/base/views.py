@@ -92,18 +92,20 @@ def profile(request):
         "today": date.today(),     
     })
 
-
 @login_required
 def mock(request, mock_id):
     exam = get_object_or_404(Mock, id=mock_id)
-    questions = Question.objects.filter(mock=exam).prefetch_related("options")
+    questions = exam.questions.prefetch_related("options").all()  
+    print("Total questions:", questions.count())  
+
     return render(request, "mock.html", {"exam": exam, "questions": questions})
+
 
 @login_required
 def submit_mock(request, mock_id):
     exam = get_object_or_404(Mock, id=mock_id)
     if request.method == "POST":
-        questions = Question.objects.prefetch_related("options").filter(mock=exam)
+        questions = exam.questions.prefetch_related("options").all()
         total = questions.count()
         attempted = correct = 0
         answers = []
